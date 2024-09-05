@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IdeaPlatform</string>
+    <string name="list_items">Список товаров</string>
 </resources>
