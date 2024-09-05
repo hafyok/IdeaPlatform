@@ -49,8 +49,22 @@ fun MainScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             SearchField()
+            ItemCatalog(
+                title = "iPhone 13",
+                tags = listOf("Телефон", "Новый", "Распродажа"),
+                quantity = 15,
+                dateAdded = "01.10.2021",
+                onEditClick = {},
+                onDeleteClick = {}
+            )
+            ItemCatalog(
+                title = "iPhone 13",
+                tags = listOf("Телефон", "Новый", "Распродажа"),
+                quantity = 15,
+                dateAdded = "01.10.2021",
+                onEditClick = {},
+                onDeleteClick = {}
+            )
         }
-
     }
-
 }
