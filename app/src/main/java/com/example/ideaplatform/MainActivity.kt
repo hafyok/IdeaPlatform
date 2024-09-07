@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.ideaplatform.Data.ItemEntity
 import com.example.ideaplatform.Data.ItemRoomDatabase
+import com.example.ideaplatform.Data.mockData
 import com.example.ideaplatform.ui.theme.IdeaPlatformTheme
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,8 +27,11 @@ class MainActivity : ComponentActivity() {
         }
         GlobalScope.launch {
             this@MainActivity.let {
-                val item = ItemEntity(id = 0, name = "TEst", time = 151515, tags = "tag1", amount = 1500)
-                ItemRoomDatabase(it).itemDao().insert(item)
+                mockData.forEach {
+                    ItemRoomDatabase(this@MainActivity).itemDao().insert(it)
+                }
+                /*val item = ItemEntity(id = 0, name = "TEst", time = 151515, tags = "tag1", amount = 1500)
+                ItemRoomDatabase(it).itemDao().insert(item)*/
             }
         }
     }

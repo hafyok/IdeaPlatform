@@ -9,19 +9,22 @@ import androidx.room.RoomDatabase
 abstract class ItemRoomDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: ItemRoomDatabase? = null
         private val LOCK = Any()
 
-        operator fun invoke(context: Context): ItemRoomDatabase{
-            return INSTANCE ?: synchronized(LOCK){
+        operator fun invoke(context: Context): ItemRoomDatabase {
+            return INSTANCE ?: synchronized(LOCK) {
                 INSTANCE ?: BuildDatabase(context).also {
                     INSTANCE == it
                 }
             }
         }
-        private fun BuildDatabase(context: Context) = Room.databaseBuilder(context.applicationContext, ItemRoomDatabase::class.java, "ItemDB").build()
+
+        private fun BuildDatabase(context: Context) =
+            Room.databaseBuilder(context.applicationContext, ItemRoomDatabase::class.java, "ItemDB")
+                .build()
 
     }
 }
