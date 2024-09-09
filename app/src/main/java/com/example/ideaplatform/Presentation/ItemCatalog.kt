@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ideaplatform.ui.theme.Purple40
@@ -124,26 +123,8 @@ fun Chip(label: String) {
     Box(
         modifier = Modifier
             .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
-            /*.border(
-                width = 1.dp,
-                color = Color.Gray,
-                shape = RoundedCornerShape(16.dp)
-            )*/
             .padding(horizontal = 16.dp, vertical = 4.dp)
     ) {
         Text(text = label)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ItemCardPreview() {
-    ItemCatalog(
-        title = "iPhone 13",
-        tags = listOf("Телефон", "Новый", "Распродажа"),
-        quantity = 15,
-        dateAdded = "01.10.2021",
-        onEditClick = {},
-        onDeleteClick = {}
-    )
 }

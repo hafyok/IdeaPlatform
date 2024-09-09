@@ -1,55 +1,43 @@
 package com.example.ideaplatform
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import com.example.ideaplatform.Data.ItemRoomDatabase
-import com.example.ideaplatform.Data.mockData
+import com.example.ideaplatform.Presentation.MainScreen
+import com.example.ideaplatform.Presentation.MainViewModel
+import com.example.ideaplatform.Presentation.MainViewModelFactory
 import com.example.ideaplatform.ui.theme.IdeaPlatformTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val database = ItemRoomDatabase(this, CoroutineScope(Dispatchers.IO))
+        val itemDao = database.itemDao()
+
+        val viewModelFactory = MainViewModelFactory(application, itemDao)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+
         enableEdgeToEdge()
+
         setContent {
             IdeaPlatformTheme {
-
-
+                MainScreen(viewModel)
             }
         }
-        val database =
+        /*val database =
             ItemRoomDatabase(context = this@MainActivity, CoroutineScope(Dispatchers.IO))
         GlobalScope.launch {
             Log.d("DB test", database.itemDao().getItems().toString())
-        }
-
-
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    IdeaPlatformTheme {
-        Greeting("Android")
+        }*/
+        //TODO() В момент первого запуска, на экране нет данных
     }
 }
