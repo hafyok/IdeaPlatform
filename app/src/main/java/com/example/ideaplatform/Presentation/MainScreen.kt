@@ -56,7 +56,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 items(itemsTov.size) { item ->
                     ItemCatalog(
                         title = itemsTov[item].name,
-                        tags = listOf(itemsTov[item].tags),
+                        tags = itemsTov[item].tags,
                         quantity = itemsTov[item].amount,
                         dateAdded = itemsTov[item].time.toString(),
                         onEditClick = { /*TODO*/ }) {
