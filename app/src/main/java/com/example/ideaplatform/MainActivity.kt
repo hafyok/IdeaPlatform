@@ -1,6 +1,7 @@
 package com.example.ideaplatform
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.ideaplatform.Data.ItemRoomDatabase
 import com.example.ideaplatform.Data.mockData
 import com.example.ideaplatform.ui.theme.IdeaPlatformTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -25,15 +28,13 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+        val database =
+            ItemRoomDatabase(context = this@MainActivity, CoroutineScope(Dispatchers.IO))
         GlobalScope.launch {
-            this@MainActivity.let {
-                mockData.forEach {
-                    ItemRoomDatabase(this@MainActivity).itemDao().insert(it)
-                }
-                /*val item = ItemEntity(id = 0, name = "TEst", time = 151515, tags = "tag1", amount = 1500)
-                ItemRoomDatabase(it).itemDao().insert(item)*/
-            }
+            Log.d("DB test", database.itemDao().getItems().toString())
         }
+
+
     }
 }
 
