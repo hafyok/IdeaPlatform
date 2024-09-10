@@ -1,7 +1,9 @@
 package com.example.ideaplatform.Presentation
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.ideaplatform.R
 
@@ -32,32 +36,36 @@ fun EditDialog(onDismissRequest: () -> Unit, amount: Int) {
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
                 Icon(
-                    painter = painterResource(id = R.drawable.baseline_delete_24),
+                    painter = painterResource(id = R.drawable.baseline_settings_24),
                     contentDescription = null
                 )
 
-                Text(text = "Количество товара")
-                Row {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_delete_24),
-                        contentDescription = "-"
-                    )
-                    Text(text = amount.toString())
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_delete_24),
-                        contentDescription = "+"
-                    )
+                Text(text = "Количество товара", fontSize = 18.sp)
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Text(text = "-", fontSize = 32.sp)
+                    Text(text = amount.toString(), fontSize = 24.sp)
+                    Text(text = "+", fontSize = 28.sp)
                 }
-                Row {
+                Row(horizontalArrangement = Arrangement.End, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)) {
                     Text(text = "Отмена")
-                    Text(text = "Принять")
+                    Spacer(modifier = Modifier.padding(horizontal = 16.dp))
+                    Text(text = "Принять", modifier = Modifier.padding(end = 16.dp))
                 }
             }
         }
 
     }
+}
+
+@Composable
+@Preview
+fun PreviewEditDialog(){
+    EditDialog(onDismissRequest = { /*TODO*/ }, amount = 30)
 }
