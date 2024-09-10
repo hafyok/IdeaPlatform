@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 
 
 class ItemRepository(private val itemDao: ItemDao){
-    val allItems: Flow<List<ItemEntity>> = itemDao.getItems()
+    var allItems: Flow<List<ItemEntity>> = itemDao.getItems()
 
     /*suspend fun fetchAllItems() {
         allItems = itemDao.getItems()

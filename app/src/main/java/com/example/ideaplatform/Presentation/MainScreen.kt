@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import com.example.ideaplatform.R
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
     val itemsTov by viewModel.items.observeAsState(emptyList())
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     Scaffold(
         topBar = {
@@ -54,7 +56,10 @@ fun MainScreen(viewModel: MainViewModel) {
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            SearchField()
+            SearchField(
+                searchQuery = searchQuery,
+                onSearchQueryChanged = { query -> viewModel.updateSearchQuery(query) }
+            )
             LazyColumn {
                 items(itemsTov.size) { item ->
                     ItemCatalog(

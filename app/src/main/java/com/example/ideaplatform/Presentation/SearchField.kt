@@ -18,18 +18,22 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.room.Query
 
 @Preview
 @Composable
-fun SearchField() {
-    val message = remember {
+fun SearchField(
+    searchQuery: String,
+    onSearchQueryChanged: (String) -> Unit
+) {
+    /*val message = remember {
         mutableStateOf(TextFieldValue(""))
-    }
+    }*/
     OutlinedTextField(
-        value = message.value,
+        value = searchQuery,
         label = { Text(text = "Поиск товаров")},
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
-        onValueChange = { message.value = it },
+        onValueChange = onSearchQueryChanged,
         textStyle = TextStyle(fontSize = 15.sp, color = Color.Gray),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.Black, // цвет при получении фокуса
