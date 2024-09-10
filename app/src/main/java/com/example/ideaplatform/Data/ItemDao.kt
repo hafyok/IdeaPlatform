@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemDao{
     @Query("SELECT * FROM ItemEntity")
-    suspend fun getItems(): List<ItemEntity>
+    fun getItems(): Flow<List<ItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: ItemEntity)

@@ -33,11 +33,5 @@ class MainActivity : ComponentActivity() {
                 MainScreen(viewModel)
             }
         }
-        /*val database =
-            ItemRoomDatabase(context = this@MainActivity, CoroutineScope(Dispatchers.IO))
-        GlobalScope.launch {
-            Log.d("DB test", database.itemDao().getItems().toString())
-        }*/
-        //TODO() В момент первого запуска, на экране нет данных
     }
 }
