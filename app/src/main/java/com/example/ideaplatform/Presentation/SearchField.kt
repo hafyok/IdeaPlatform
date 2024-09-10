@@ -26,9 +26,6 @@ fun SearchField(
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit
 ) {
-    /*val message = remember {
-        mutableStateOf(TextFieldValue(""))
-    }*/
     OutlinedTextField(
         value = searchQuery,
         label = { Text(text = "Поиск товаров")},

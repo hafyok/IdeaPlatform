@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.ideaplatform.Data.ItemDao
 import com.example.ideaplatform.Data.ItemEntity
 import com.example.ideaplatform.Data.ItemRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -18,11 +19,10 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application, itemDao: ItemDao) : AndroidViewModel(application) {
     private val repository = ItemRepository(itemDao)
 
-    // Строка поиска
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
 
-    // Элементы, отфильтрованные по строке поиска
+    @OptIn(ExperimentalCoroutinesApi::class)
     val items: LiveData<List<ItemEntity>> = _searchQuery.flatMapLatest { query ->
         repository.allItems.map { list ->
             if (query.isEmpty()) {
