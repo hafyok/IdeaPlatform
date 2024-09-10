@@ -1,5 +1,7 @@
 package com.example.ideaplatform.Presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ideaplatform.R
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
@@ -58,7 +61,7 @@ fun MainScreen(viewModel: MainViewModel) {
                         title = itemsTov[item].name,
                         tags = itemsTov[item].tags,
                         quantity = itemsTov[item].amount,
-                        dateAdded = itemsTov[item].time.toString(),
+                        dateAdded = itemsTov[item].time,
                         onEditClick = { /*TODO*/ }) {
 
                     }

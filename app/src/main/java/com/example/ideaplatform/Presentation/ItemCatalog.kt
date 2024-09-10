@@ -1,5 +1,7 @@
 package com.example.ideaplatform.Presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,14 +27,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ideaplatform.ui.theme.Purple40
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ItemCatalog(
     title: String,
     tags: List<String>,
     quantity: Int,
-    dateAdded: String,
+    dateAdded: Long,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
@@ -111,7 +117,7 @@ fun ItemCatalog(
                     text = "$quantity",
                 )
                 Text(
-                    text = dateAdded,
+                    text = convertToDate(dateAdded),
                 )
             }
         }
@@ -127,4 +133,13 @@ fun Chip(label: String) {
     ) {
         Text(text = label)
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun convertToDate(long: Long): String {
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val dateString = Instant.ofEpochMilli(long)
+        .atZone(ZoneId.systemDefault())
+        .format(formatter)
+    return dateString
 }
