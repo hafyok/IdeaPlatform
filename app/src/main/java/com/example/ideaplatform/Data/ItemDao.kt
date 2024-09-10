@@ -12,5 +12,8 @@ interface ItemDao{
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: ItemEntity)
+
+    @Query("DELETE FROM ItemEntity WHERE id = :itemId")
+    fun deleteItemById(itemId: Int)
 }
 
