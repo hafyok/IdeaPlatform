@@ -27,4 +27,12 @@ class MainViewModel(application: Application, itemDao: ItemDao) : AndroidViewMod
             Log.d("Test vm", _items.value.toString())
         }
     }
+
+    fun removeItem(id: Int){
+        viewModelScope.launch {
+            repository.removeItemById(id)
+            Log.d("REMOVING", "Removing item with id: $id")
+            _items.value = repository.allItems
+        }
+    }
 }

@@ -62,9 +62,8 @@ fun MainScreen(viewModel: MainViewModel) {
                         tags = itemsTov[item].tags,
                         quantity = itemsTov[item].amount,
                         dateAdded = itemsTov[item].time,
-                        onEditClick = { /*TODO*/ }) {
-
-                    }
+                        onEditClick = { /*TODO*/ },
+                        onDeleteClick = { viewModel.removeItem(itemsTov[item].id) })
                 }
             }
         }
