@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,17 +48,29 @@ fun EditDialog(onDismissRequest: () -> Unit, amount: Int) {
                 )
 
                 Text(text = "Количество товара", fontSize = 18.sp)
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     Text(text = "-", fontSize = 32.sp)
                     Text(text = amount.toString(), fontSize = 24.sp)
                     Text(text = "+", fontSize = 28.sp)
                 }
-                Row(horizontalArrangement = Arrangement.End, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)) {
-                    Text(text = "Отмена")
+                Row(
+                    horizontalArrangement = Arrangement.End, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    ClickableText(text = AnnotatedString("Отмена"),
+                        onClick = {
+                            onDismissRequest()
+                        })
                     Spacer(modifier = Modifier.padding(horizontal = 16.dp))
-                    Text(text = "Принять", modifier = Modifier.padding(end = 16.dp))
+                    ClickableText(text = AnnotatedString("Принять"),
+                        modifier = Modifier.padding(end = 16.dp),
+                        onClick = {
+                            onDismissRequest()
+                        })
                 }
             }
         }
@@ -66,6 +80,6 @@ fun EditDialog(onDismissRequest: () -> Unit, amount: Int) {
 
 @Composable
 @Preview
-fun PreviewEditDialog(){
+fun PreviewEditDialog() {
     EditDialog(onDismissRequest = { /*TODO*/ }, amount = 30)
 }
