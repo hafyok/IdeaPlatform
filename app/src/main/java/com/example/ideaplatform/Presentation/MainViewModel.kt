@@ -43,4 +43,11 @@ class MainViewModel(application: Application, itemDao: ItemDao) : AndroidViewMod
             Log.d("REMOVING", "Removing item with id: $id")
         }
     }
+
+    fun updateItem(id: Int, newAmount: Int) {
+        viewModelScope.launch {
+            repository.updateAmount(id, newAmount)
+            Log.d("UPDATING", "Updated item id: $id with new amount: $newAmount")
+        }
+    }
 }

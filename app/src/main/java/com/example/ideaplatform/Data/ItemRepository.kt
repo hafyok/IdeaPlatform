@@ -17,5 +17,11 @@ class ItemRepository(private val itemDao: ItemDao){
             itemDao.deleteItemById(id)
         }
     }
+
+    suspend fun updateAmount(id: Int, newAmount: Int) {
+        withContext(Dispatchers.IO) {
+            itemDao.updateAmountById(id, newAmount)
+        }
+    }
 }
 

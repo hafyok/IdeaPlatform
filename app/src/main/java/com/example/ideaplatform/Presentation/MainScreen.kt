@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.ideaplatform.R
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -37,15 +34,8 @@ fun MainScreen(viewModel: MainViewModel) {
     val searchQuery by viewModel.searchQuery.collectAsState()
 
     val openDialog = remember { mutableStateOf(false) }
-    val amount = remember {
-        mutableStateOf(0)
-    }
-    Button({ openDialog.value = true }) {
-        Text("Удалить", fontSize = 22.sp)
-    }
-    if (openDialog.value) {
-        EditDialog({ openDialog.value = false }, amount.value)
-    }
+    val amount = remember { mutableStateOf(0) }
+    val selectedItemId = remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -83,10 +73,27 @@ fun MainScreen(viewModel: MainViewModel) {
                         tags = itemsTov[item].tags,
                         quantity = itemsTov[item].amount,
                         dateAdded = itemsTov[item].time,
-                        onEditClick = { openDialog.value = true },
-                        onDeleteClick = { viewModel.removeItem(itemsTov[item].id) })
+                        onEditClick = {
+                            openDialog.value = true
+                            amount.value = itemsTov[item].amount
+                            selectedItemId.value = itemsTov[item].id
+                        },
+                        onDeleteClick = { viewModel.removeItem(itemsTov[item].id) }
+                    )
                 }
             }
+        }
+
+        if (openDialog.value) {
+            EditDialog(
+                onDismiss = { openDialog.value = false },
+                onConfirm = {
+                    viewModel.updateItem(selectedItemId.value, amount.value)
+                    openDialog.value = false
+                },
+                amount = amount.value,
+                onAmountChange = { amount.value = it }
+            )
         }
     }
 }
