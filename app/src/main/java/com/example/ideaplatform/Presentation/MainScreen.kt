@@ -33,9 +33,12 @@ fun MainScreen(viewModel: MainViewModel) {
     val itemsTov by viewModel.items.observeAsState(emptyList())
     val searchQuery by viewModel.searchQuery.collectAsState()
 
-    val openDialog = remember { mutableStateOf(false) }
+    val openEditDialog = remember { mutableStateOf(false) }
     val amount = remember { mutableStateOf(0) }
     val selectedItemId = remember { mutableStateOf(0) }
+
+    val openDeleteDialog = remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
@@ -74,7 +77,7 @@ fun MainScreen(viewModel: MainViewModel) {
                         quantity = itemsTov[item].amount,
                         dateAdded = itemsTov[item].time,
                         onEditClick = {
-                            openDialog.value = true
+                            openEditDialog.value = true
                             amount.value = itemsTov[item].amount
                             selectedItemId.value = itemsTov[item].id
                         },
@@ -84,12 +87,12 @@ fun MainScreen(viewModel: MainViewModel) {
             }
         }
 
-        if (openDialog.value) {
+        if (openEditDialog.value) {
             EditDialog(
-                onDismiss = { openDialog.value = false },
+                onDismiss = { openEditDialog.value = false },
                 onConfirm = {
                     viewModel.updateItem(selectedItemId.value, amount.value)
-                    openDialog.value = false
+                    openEditDialog.value = false
                 },
                 amount = amount.value,
                 onAmountChange = { amount.value = it }
