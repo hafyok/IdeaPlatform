@@ -7,12 +7,17 @@ class Converters {
     // Преобразуем строку в список
     @TypeConverter
     fun fromStringToList(value: String): List<String> {
-        return value.split(",").map { it.trim() }
+        return value.split(",").map {
+            it.trim().
+            replace("[", "").
+            replace("]", "").
+            replace("\"", "") }
     }
 
     // Преобразуем список в строку
     @TypeConverter
     fun fromListToString(list: List<String>): String {
         return list.joinToString(",")
+        //return list.joinToString(",")
     }
 }
