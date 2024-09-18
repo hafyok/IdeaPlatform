@@ -1,7 +1,6 @@
 package com.example.ideaplatform.Presentation
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,9 +37,6 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
     val openEditDialog = remember { mutableStateOf(false) }
     val amount = remember { mutableStateOf(0) }
     val selectedItemId = remember { mutableStateOf(0) }
-
-    val openDeleteDialog = remember { mutableStateOf(false) }
-
 
     Scaffold(
         topBar = {
@@ -84,10 +80,7 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
                             selectedItemId.value = itemsTov[item].id
                         },
                         onDeleteClick = {
-                            openDeleteDialog.value = true
-                            selectedItemId.value = itemsTov[item].id
-                            Log.d("ItemId", selectedItemId.value.toString())
-                            //viewModel.removeItem(itemsTov[item].id)
+                            viewModel.removeItem(itemsTov[item].id)
                         }
                     )
                 }
@@ -104,16 +97,6 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
                 amount = amount.value,
                 onAmountChange = { amount.value = it }
             )
-        }
-
-        if (openDeleteDialog.value) {
-            DeleteDialog(
-                onDismiss = { openDeleteDialog.value = false },
-                onConfirm = {
-                    Log.d("ItemId", itemsTov[selectedItemId.value].id.toString())
-                    viewModel.removeItem(itemsTov[selectedItemId.value].id)
-                    openDeleteDialog.value = false
-                })
         }
     }
 }
