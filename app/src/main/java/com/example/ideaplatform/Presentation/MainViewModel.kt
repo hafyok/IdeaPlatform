@@ -1,23 +1,27 @@
 package com.example.ideaplatform.Presentation
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.ideaplatform.Data.ItemDao
 import com.example.ideaplatform.Data.ItemEntity
 import com.example.ideaplatform.Data.ItemRepository
+import com.example.ideaplatform.Data.ItemRoomDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application, itemDao: ItemDao) : AndroidViewModel(application) {
-    private val repository = ItemRepository(itemDao)
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    val itemDb: ItemRoomDatabase
+): ViewModel() {
+    private val repository = ItemRepository(itemDb.dao)
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery

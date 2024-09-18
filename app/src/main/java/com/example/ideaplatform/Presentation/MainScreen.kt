@@ -1,6 +1,7 @@
 package com.example.ideaplatform.Presentation
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,12 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.ideaplatform.R
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
+fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
     val itemsTov by viewModel.items.observeAsState(emptyList())
     val searchQuery by viewModel.searchQuery.collectAsState()
 
@@ -81,7 +83,12 @@ fun MainScreen(viewModel: MainViewModel) {
                             amount.value = itemsTov[item].amount
                             selectedItemId.value = itemsTov[item].id
                         },
-                        onDeleteClick = { viewModel.removeItem(itemsTov[item].id) }
+                        onDeleteClick = {
+                            openDeleteDialog.value = true
+                            selectedItemId.value = itemsTov[item].id
+                            Log.d("ItemId", selectedItemId.value.toString())
+                            //viewModel.removeItem(itemsTov[item].id)
+                        }
                     )
                 }
             }
@@ -97,6 +104,16 @@ fun MainScreen(viewModel: MainViewModel) {
                 amount = amount.value,
                 onAmountChange = { amount.value = it }
             )
+        }
+
+        if (openDeleteDialog.value) {
+            DeleteDialog(
+                onDismiss = { openDeleteDialog.value = false },
+                onConfirm = {
+                    Log.d("ItemId", itemsTov[selectedItemId.value].id.toString())
+                    viewModel.removeItem(itemsTov[selectedItemId.value].id)
+                    openDeleteDialog.value = false
+                })
         }
     }
 }

@@ -19,16 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.ideaplatform.R
 
-@Preview
+
 @Composable
-fun DeleteDialog() {
-    Dialog(onDismissRequest = { /*TODO*/ }) {
+fun DeleteDialog(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    Dialog(onDismissRequest = { onDismiss() }) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -46,7 +48,10 @@ fun DeleteDialog() {
                     contentDescription = null
                 )
                 Text(text = "Удаление товара", fontSize = 18.sp)
-                Text(text = "Вы действительно хотите удалить выбранный товар?", textAlign = TextAlign.Center)
+                Text(
+                    text = "Вы действительно хотите удалить выбранный товар?",
+                    textAlign = TextAlign.Center
+                )
                 Row(
                     horizontalArrangement = Arrangement.End, modifier = Modifier
                         .fillMaxWidth()
@@ -54,13 +59,13 @@ fun DeleteDialog() {
                 ) {
                     ClickableText(text = AnnotatedString("Нет"),
                         onClick = {
-                            //TODO()
+                            onDismiss()
                         })
                     Spacer(modifier = Modifier.padding(horizontal = 16.dp))
                     ClickableText(text = AnnotatedString("Да"),
                         modifier = Modifier.padding(end = 16.dp),
                         onClick = {
-                            //TODO()
+                            onConfirm()
                         })
                 }
             }

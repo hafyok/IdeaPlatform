@@ -3,7 +3,7 @@ package com.example.ideaplatform.Data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity (tableName = "item")
 data class ItemEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
